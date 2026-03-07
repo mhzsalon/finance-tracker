@@ -1,0 +1,10 @@
+[
+  { "id": 1, "name": "Food", "isCustom": false },
+  { "id": 2, "name": "Ren", "isCustom": false },
+  { "id": 3, "name": "Travel", "isCustom": false },
+  { "id": 5, "name": "Shopping", "isCustom": false },
+  { "id": 6, "name": "Entertainment", "isCustom": false },
+  { "id": 7, "name": "Health", "isCustom": false },
+  { "id": 8, "name": "Miscellaneous", "isCustom": false }
+]
+
