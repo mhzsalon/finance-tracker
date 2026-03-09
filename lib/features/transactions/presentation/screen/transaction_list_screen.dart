@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:universalexpensetracker/core/extensions/numbers_extension.dart';
 import 'package:universalexpensetracker/core/theme/app_colors.dart';
 import 'package:universalexpensetracker/core/theme/app_text_styles.dart';
+import 'package:universalexpensetracker/core/widgets/states/error_state.dart';
+import 'package:universalexpensetracker/core/widgets/states/loading_state.dart';
+import 'package:universalexpensetracker/features/transactions/presentation/widgets/empty_transaction_widget.dart';
 
 class TransactionListScreen extends ConsumerStatefulWidget {
   const TransactionListScreen({super.key});
@@ -26,14 +29,15 @@ class _TransactionListScreenState extends ConsumerState<TransactionListScreen> {
         16.hSizedBox,
         _buildFilters(),
         24.hSizedBox,
-        ListView.builder(
-          itemBuilder: (context, index) => Container(),
-
-          // TransactionTile(transaction: _recentTransactions[2]
-          shrinkWrap: true,
-          physics: BouncingScrollPhysics(),
-          itemCount: 10,
-        ),
+        Expanded(child: EmptyTransactionWidget()),
+        // EmptyTransactionWidget(),
+        // ListView.builder(
+        //   itemBuilder: (context, index) => Container(),
+        //   // TransactionTile(transaction: _recentTransactions[2]
+        //   shrinkWrap: true,
+        //   physics: BouncingScrollPhysics(),
+        //   itemCount: 10,
+        // ),
       ],
     );
   }

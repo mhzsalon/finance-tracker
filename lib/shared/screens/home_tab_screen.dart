@@ -25,7 +25,7 @@ class _HomeTabScreenState extends ConsumerState<HomeTabScreen> {
           children: [
             Expanded(
               child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 350),
+                duration: const Duration(milliseconds: 300),
                 transitionBuilder: (child, animation) {
                   final offsetAnimation = Tween<Offset>(
                     begin: const Offset(0.1, 0),
@@ -37,9 +37,9 @@ class _HomeTabScreenState extends ConsumerState<HomeTabScreen> {
                     child: FadeTransition(opacity: animation, child: child),
                   );
                 },
-                child: SingleChildScrollView(
+                child: Padding(
                   key: ValueKey(currentScreen.runtimeType),
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: currentScreen,
                 ),
               ),

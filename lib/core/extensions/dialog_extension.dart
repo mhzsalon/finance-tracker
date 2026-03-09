@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:universalexpensetracker/shared/widgets/app_status_dialog.dart';
+import 'package:universalexpensetracker/core/widgets/app_status_dialog.dart';
 
 extension AppStatusDialogHelper on AppStatusDialog {
   static bool _isDialogShowing = false;

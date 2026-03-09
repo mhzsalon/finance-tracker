@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:universalexpensetracker/core/extensions/numbers_extension.dart';
+import 'package:universalexpensetracker/core/extensions/widget_extensions.dart';
 import 'package:universalexpensetracker/core/theme/app_colors.dart';
 import 'package:universalexpensetracker/core/theme/app_text_styles.dart';
+import 'package:universalexpensetracker/core/widgets/states/error_state.dart';
+import 'package:universalexpensetracker/core/widgets/states/loading_state.dart';
 import 'package:universalexpensetracker/features/dashboard/presentation/provider/dashboard_provider.dart';
 import 'package:universalexpensetracker/features/dashboard/presentation/widgets/summary_card_widget.dart';
 import 'package:universalexpensetracker/features/transactions/domain/entities/transaction_entity.dart';
+import 'package:universalexpensetracker/features/transactions/presentation/widgets/empty_transaction_widget.dart';
 import 'package:universalexpensetracker/features/transactions/presentation/widgets/transaction_title.dart';
 import 'package:universalexpensetracker/shared/enums/home_tab_enums.dart';
 import 'package:universalexpensetracker/shared/providers/home_tab_provider.dart';
@@ -22,14 +26,13 @@ class DashboardScreen extends ConsumerStatefulWidget {
 class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        16.hSizedBox,
-        _buildHeader(),
-        24.hSizedBox,
-        _bodyBuilder(),
-        24.hSizedBox,
+    return CustomScrollView(
+      slivers: [
+        16.hSizedBox.toSliverBox(),
+        _buildHeader().toSliverBox(),
+        24.hSizedBox.toSliverBox(),
+        SliverFillRemaining(hasScrollBody: false, child: _bodyBuilder()),
+        24.hSizedBox.toSliverBox(),
       ],
     );
   }
@@ -51,8 +54,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           ],
         );
       },
-      error: (e, _) => Center(child: Text('Error: $e')),
-      loading: () => Center(child: CircularProgressIndicator()),
+      error: (e, _) =>
+          ErrorState(onRetry: () => ref.refresh(streamProviderOfDashboard)),
+      loading: () => LoadingState(),
     );
   }
 
@@ -65,7 +69,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Good Morning 👋',
+              'Welcome to',
               style: TextStyle(color: AppColors.labels, fontSize: 14),
             ),
             4.hSizedBox,
@@ -243,6 +247,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 fontWeight: FontWeight.w700,
               ),
             ),
+
             GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () => ref
@@ -250,13 +255,16 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   .updateTab(HomeTabEnums.transaction),
               child: Text(
                 'See all',
-                style: TextStyle(color: AppColors.income, fontSize: 13),
+                style: TextStyle(color: AppColors.income, fontSize: 13.sp),
               ),
             ),
           ],
         ),
         16.hSizedBox,
-        ...recentTransactions.map((t) => TransactionTile(transaction: t)),
+        if (recentTransactions.isEmpty)
+          EmptyTransactionWidget()
+        else
+          ...recentTransactions.map((t) => TransactionTile(transaction: t)),
       ],
     );
   }
