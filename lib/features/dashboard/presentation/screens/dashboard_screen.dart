@@ -48,7 +48,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               totalIncome: data.totalIncome,
             ),
             24.hSizedBox,
-            _buildSpendingChart(),
+            _buildSpendingChart(data.totalAmount),
             24.hSizedBox,
             _buildRecentTransactions(data.recentTransactions),
           ],
@@ -134,7 +134,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   }
 
   // ── Spending Chart ────────────────────────────────────────────────
-  Widget _buildSpendingChart() {
+  Widget _buildSpendingChart(double totalAmount) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -181,7 +181,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text('\$1,996', style: AppTextStyles.bodyBold),
+                        Text(
+                          totalAmount.toInt().toKMB(),
+                          style: AppTextStyles.bodyBold,
+                        ),
                         Text(
                           'Total',
                           style: TextStyle(
@@ -309,8 +312,6 @@ class _LegendItem extends StatelessWidget {
     );
   }
 }
-
-// ─── Transaction Tile Widget ──────────────────────────────────────
 
 // ─── Donut Chart Painter ──────────────────────────────────────────
 class _DonutSegment {

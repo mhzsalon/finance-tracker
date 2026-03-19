@@ -28,6 +28,8 @@ class AppColors {
   static const Color error = Color(0xFFD32F2F);
   // UI
   static const Color border = Color(0xFF21262D);
+  static const Color borderLight = Color(0xFF2A2F3A);
+
   static const Color divider = Color(0xFFE5E7EB);
   static const Color buttons = Color(0xFF00C9A7);
 

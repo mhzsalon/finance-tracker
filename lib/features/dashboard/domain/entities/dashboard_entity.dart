@@ -4,15 +4,22 @@ import 'package:universalexpensetracker/features/transactions/domain/entities/tr
 class DashboardEntity extends Equatable {
   final double totalIncome;
   final double totalExpense;
+  final double totalAmount;
   final List<TransactionEntity> recentTransactions;
 
   const DashboardEntity({
     required this.totalIncome,
     required this.totalExpense,
     required this.recentTransactions,
+    required this.totalAmount,
   });
 
   @override
   // TODO: implement props
-  List<Object?> get props => [totalExpense, totalIncome, recentTransactions];
+  List<Object?> get props => [
+    totalExpense,
+    totalIncome,
+    recentTransactions,
+    totalAmount,
+  ];
 }

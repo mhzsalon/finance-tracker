@@ -10,4 +10,5 @@ abstract class TransactionRepository {
   Stream<Either<Failure, List<TransactionEntity>>> watchTransactions(
     TransactionFilterParams params,
   );
+  Future<Either<Failure, void>> exportTransactions();
 }

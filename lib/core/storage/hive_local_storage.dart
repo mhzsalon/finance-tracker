@@ -23,7 +23,6 @@ class HiveLocalStorage implements LocalStorage<Map<String, dynamic>> {
 
   @override
   Future<void> add(Map<String, dynamic> item) async {
-    // await box.deleteFromDisk();
     await box.add(jsonEncode(item));
   }
 
@@ -32,21 +31,12 @@ class HiveLocalStorage implements LocalStorage<Map<String, dynamic>> {
     await box.clear();
   }
 
-  // @override
-  // Stream<List<Map<String, dynamic>>> getStreamData() {
-  //   return box.watch().map((_) {
-  //     return box.values
-  //         .map((e) => Map<String, dynamic>.from(e as Map))
-  //         .toList();
-  //   });
-  // }
-
   @override
   Stream<List<Map<String, dynamic>>> getStreamData() async* {
-    // 👇 Emit initial state first
+    //  Emit initial state first
     yield box.values.map((e) => jsonDecode(e) as Map<String, dynamic>).toList();
 
-    // 👇 Then emit on changes
+    //  Then emit on changes
     yield* box.watch().map((_) {
       return box.values
           .map((e) => jsonDecode(e) as Map<String, dynamic>)

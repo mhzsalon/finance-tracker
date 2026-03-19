@@ -14,9 +14,7 @@ import 'package:universalexpensetracker/features/transactions/domain/usecase/add
 import 'package:universalexpensetracker/features/transactions/presentation/providers/state/transaction_state.dart';
 import 'package:universalexpensetracker/features/transactions/presentation/providers/transaction_type_provider.dart';
 import 'package:universalexpensetracker/features/transactions/presentation/widgets/transaction_field_widget.dart';
-import 'package:universalexpensetracker/core/widgets/app_status_dialog.dart';
 
-// ═════════════════════════════════════════════════════════════════════
 class AddTransactionScreen extends ConsumerStatefulWidget {
   const AddTransactionScreen({super.key});
   @override

@@ -15,17 +15,9 @@ class GetDashboardUsecase implements StreamUsecase<DashboardEntity, void> {
   @override
   Stream<Either<Failure, DashboardEntity>> call({void params}) async* {
     yield* transactionRepository
-        .watchTransactions(
-          TransactionFilterParams(
-            categoryId: null,
-            dateFilter: null,
-            type: null,
-          ),
-        )
+        .watchTransactions(TransactionFilterParams(limit: 0))
         .map((either) {
-          print(either);
           return either.fold((failure) => Left(failure), (transactions) {
-            print(transactions);
             final totalIncome = transactions
                 .where((t) => t.type == TransactionType.income)
                 .fold<double>(0, (sum, t) => sum + t.amount);
@@ -34,10 +26,19 @@ class GetDashboardUsecase implements StreamUsecase<DashboardEntity, void> {
                 .where((t) => t.type == TransactionType.expenses)
                 .fold<double>(0, (sum, t) => sum + t.amount);
 
+            final totalAmount = transactions.fold<double>(
+              0,
+              (sum, t) => sum + t.amount,
+            );
+            print(totalAmount);
+            print(totalIncome);
+            print(totalExpense);
+
             final recentTransactions = transactions.take(5).toList();
 
             return Right(
               DashboardEntity(
+                totalAmount: totalAmount,
                 totalIncome: totalIncome,
                 totalExpense: totalExpense,
                 recentTransactions: recentTransactions,
@@ -45,32 +46,6 @@ class GetDashboardUsecase implements StreamUsecase<DashboardEntity, void> {
             );
           });
         });
-
-    // await for (final either in transactionRepository.watchTransactions(
-    //   TransactionFilterParams(categoryId: null, dateFilter: null, type: null),
-    // )) {
-    //   yield either.fold((failure) => Left(failure), (transactions) {
-    //     print(transactions);
-    //     final totalIncome = transactions
-    //         .where((t) => t.type == TransactionType.income)
-    //         .fold<double>(0, (sum, t) => sum + t.amount);
-
-    //     final totalExpense = transactions
-    //         .where((t) => t.type == TransactionType.expenses)
-    //         .fold<double>(0, (sum, t) => sum + t.amount);
-
-    //     final recentTransactions = transactions.take(5).toList();
-
-    //     return Right(
-    //       DashboardEntity(
-    //         totalIncome: totalIncome,
-    //         totalExpense: totalExpense,
-    //         recentTransactions: recentTransactions,
-    //       ),
-    //     );
-    //   });
-
-    // }
   }
 }
 
@@ -78,7 +53,27 @@ class TransactionFilterParams extends Equatable {
   final TransactionType? type;
   final int? categoryId;
   final DateTime? dateFilter;
-  const TransactionFilterParams({this.type, this.categoryId, this.dateFilter});
+  final int limit;
+  const TransactionFilterParams({
+    this.type,
+    this.categoryId,
+    this.dateFilter,
+    required this.limit,
+  });
+
+  TransactionFilterParams copyWith({
+    TransactionType? type,
+    int? categoryId,
+    DateTime? dateFilter,
+    int? limit,
+  }) {
+    return TransactionFilterParams(
+      type: type ?? this.type,
+      categoryId: categoryId ?? this.categoryId,
+      dateFilter: dateFilter ?? this.dateFilter,
+      limit: limit ?? this.limit,
+    );
+  }
 
   @override
   // TODO: implement props

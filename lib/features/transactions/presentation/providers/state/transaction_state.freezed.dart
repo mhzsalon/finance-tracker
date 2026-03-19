@@ -14,8 +14,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TransactionState {
 
-/// The state of the reels feed.
- CreateTransactionState get createTransactionState;
+ CreateTransactionState get createTransactionState; TransactionExportState get transactionExportState;// Filter oprions States
+ TransactionType? get type; int? get categoryId; DateTime? get dateFilter; int get limit;
 /// Create a copy of TransactionState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $TransactionStateCopyWith<TransactionState> get copyWith => _$TransactionStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionState&&(identical(other.createTransactionState, createTransactionState) || other.createTransactionState == createTransactionState));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionState&&(identical(other.createTransactionState, createTransactionState) || other.createTransactionState == createTransactionState)&&(identical(other.transactionExportState, transactionExportState) || other.transactionExportState == transactionExportState)&&(identical(other.type, type) || other.type == type)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.dateFilter, dateFilter) || other.dateFilter == dateFilter)&&(identical(other.limit, limit) || other.limit == limit));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,createTransactionState);
+int get hashCode => Object.hash(runtimeType,createTransactionState,transactionExportState,type,categoryId,dateFilter,limit);
 
 @override
 String toString() {
-  return 'TransactionState(createTransactionState: $createTransactionState)';
+  return 'TransactionState(createTransactionState: $createTransactionState, transactionExportState: $transactionExportState, type: $type, categoryId: $categoryId, dateFilter: $dateFilter, limit: $limit)';
 }
 
 
@@ -46,11 +46,11 @@ abstract mixin class $TransactionStateCopyWith<$Res>  {
   factory $TransactionStateCopyWith(TransactionState value, $Res Function(TransactionState) _then) = _$TransactionStateCopyWithImpl;
 @useResult
 $Res call({
- CreateTransactionState createTransactionState
+ CreateTransactionState createTransactionState, TransactionExportState transactionExportState, TransactionType? type, int? categoryId, DateTime? dateFilter, int limit
 });
 
 
-$CreateTransactionStateCopyWith<$Res> get createTransactionState;
+$CreateTransactionStateCopyWith<$Res> get createTransactionState;$TransactionExportStateCopyWith<$Res> get transactionExportState;
 
 }
 /// @nodoc
@@ -63,10 +63,15 @@ class _$TransactionStateCopyWithImpl<$Res>
 
 /// Create a copy of TransactionState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? createTransactionState = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? createTransactionState = null,Object? transactionExportState = null,Object? type = freezed,Object? categoryId = freezed,Object? dateFilter = freezed,Object? limit = null,}) {
   return _then(_self.copyWith(
 createTransactionState: null == createTransactionState ? _self.createTransactionState : createTransactionState // ignore: cast_nullable_to_non_nullable
-as CreateTransactionState,
+as CreateTransactionState,transactionExportState: null == transactionExportState ? _self.transactionExportState : transactionExportState // ignore: cast_nullable_to_non_nullable
+as TransactionExportState,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as TransactionType?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as int?,dateFilter: freezed == dateFilter ? _self.dateFilter : dateFilter // ignore: cast_nullable_to_non_nullable
+as DateTime?,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 /// Create a copy of TransactionState
@@ -77,6 +82,15 @@ $CreateTransactionStateCopyWith<$Res> get createTransactionState {
   
   return $CreateTransactionStateCopyWith<$Res>(_self.createTransactionState, (value) {
     return _then(_self.copyWith(createTransactionState: value));
+  });
+}/// Create a copy of TransactionState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TransactionExportStateCopyWith<$Res> get transactionExportState {
+  
+  return $TransactionExportStateCopyWith<$Res>(_self.transactionExportState, (value) {
+    return _then(_self.copyWith(transactionExportState: value));
   });
 }
 }
@@ -160,10 +174,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CreateTransactionState createTransactionState)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( CreateTransactionState createTransactionState,  TransactionExportState transactionExportState,  TransactionType? type,  int? categoryId,  DateTime? dateFilter,  int limit)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TransactionState() when $default != null:
-return $default(_that.createTransactionState);case _:
+return $default(_that.createTransactionState,_that.transactionExportState,_that.type,_that.categoryId,_that.dateFilter,_that.limit);case _:
   return orElse();
 
 }
@@ -181,10 +195,10 @@ return $default(_that.createTransactionState);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CreateTransactionState createTransactionState)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( CreateTransactionState createTransactionState,  TransactionExportState transactionExportState,  TransactionType? type,  int? categoryId,  DateTime? dateFilter,  int limit)  $default,) {final _that = this;
 switch (_that) {
 case _TransactionState():
-return $default(_that.createTransactionState);case _:
+return $default(_that.createTransactionState,_that.transactionExportState,_that.type,_that.categoryId,_that.dateFilter,_that.limit);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +215,10 @@ return $default(_that.createTransactionState);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CreateTransactionState createTransactionState)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( CreateTransactionState createTransactionState,  TransactionExportState transactionExportState,  TransactionType? type,  int? categoryId,  DateTime? dateFilter,  int limit)?  $default,) {final _that = this;
 switch (_that) {
 case _TransactionState() when $default != null:
-return $default(_that.createTransactionState);case _:
+return $default(_that.createTransactionState,_that.transactionExportState,_that.type,_that.categoryId,_that.dateFilter,_that.limit);case _:
   return null;
 
 }
@@ -216,11 +230,16 @@ return $default(_that.createTransactionState);case _:
 
 
 class _TransactionState implements TransactionState {
-   _TransactionState({this.createTransactionState = const CreateTransactionState.initial()});
+   _TransactionState({this.createTransactionState = const CreateTransactionState.initial(), this.transactionExportState = const TransactionExportState.initial(), this.type, this.categoryId, this.dateFilter, this.limit = 10});
   
 
-/// The state of the reels feed.
 @override@JsonKey() final  CreateTransactionState createTransactionState;
+@override@JsonKey() final  TransactionExportState transactionExportState;
+// Filter oprions States
+@override final  TransactionType? type;
+@override final  int? categoryId;
+@override final  DateTime? dateFilter;
+@override@JsonKey() final  int limit;
 
 /// Create a copy of TransactionState
 /// with the given fields replaced by the non-null parameter values.
@@ -232,16 +251,16 @@ _$TransactionStateCopyWith<_TransactionState> get copyWith => __$TransactionStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionState&&(identical(other.createTransactionState, createTransactionState) || other.createTransactionState == createTransactionState));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionState&&(identical(other.createTransactionState, createTransactionState) || other.createTransactionState == createTransactionState)&&(identical(other.transactionExportState, transactionExportState) || other.transactionExportState == transactionExportState)&&(identical(other.type, type) || other.type == type)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.dateFilter, dateFilter) || other.dateFilter == dateFilter)&&(identical(other.limit, limit) || other.limit == limit));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,createTransactionState);
+int get hashCode => Object.hash(runtimeType,createTransactionState,transactionExportState,type,categoryId,dateFilter,limit);
 
 @override
 String toString() {
-  return 'TransactionState(createTransactionState: $createTransactionState)';
+  return 'TransactionState(createTransactionState: $createTransactionState, transactionExportState: $transactionExportState, type: $type, categoryId: $categoryId, dateFilter: $dateFilter, limit: $limit)';
 }
 
 
@@ -252,11 +271,11 @@ abstract mixin class _$TransactionStateCopyWith<$Res> implements $TransactionSta
   factory _$TransactionStateCopyWith(_TransactionState value, $Res Function(_TransactionState) _then) = __$TransactionStateCopyWithImpl;
 @override @useResult
 $Res call({
- CreateTransactionState createTransactionState
+ CreateTransactionState createTransactionState, TransactionExportState transactionExportState, TransactionType? type, int? categoryId, DateTime? dateFilter, int limit
 });
 
 
-@override $CreateTransactionStateCopyWith<$Res> get createTransactionState;
+@override $CreateTransactionStateCopyWith<$Res> get createTransactionState;@override $TransactionExportStateCopyWith<$Res> get transactionExportState;
 
 }
 /// @nodoc
@@ -269,10 +288,15 @@ class __$TransactionStateCopyWithImpl<$Res>
 
 /// Create a copy of TransactionState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? createTransactionState = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? createTransactionState = null,Object? transactionExportState = null,Object? type = freezed,Object? categoryId = freezed,Object? dateFilter = freezed,Object? limit = null,}) {
   return _then(_TransactionState(
 createTransactionState: null == createTransactionState ? _self.createTransactionState : createTransactionState // ignore: cast_nullable_to_non_nullable
-as CreateTransactionState,
+as CreateTransactionState,transactionExportState: null == transactionExportState ? _self.transactionExportState : transactionExportState // ignore: cast_nullable_to_non_nullable
+as TransactionExportState,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as TransactionType?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as int?,dateFilter: freezed == dateFilter ? _self.dateFilter : dateFilter // ignore: cast_nullable_to_non_nullable
+as DateTime?,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
@@ -284,6 +308,15 @@ $CreateTransactionStateCopyWith<$Res> get createTransactionState {
   
   return $CreateTransactionStateCopyWith<$Res>(_self.createTransactionState, (value) {
     return _then(_self.copyWith(createTransactionState: value));
+  });
+}/// Create a copy of TransactionState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TransactionExportStateCopyWith<$Res> get transactionExportState {
+  
+  return $TransactionExportStateCopyWith<$Res>(_self.transactionExportState, (value) {
+    return _then(_self.copyWith(transactionExportState: value));
   });
 }
 }
@@ -654,6 +687,346 @@ class __$CreateTransactionStateErrorCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? failure = null,}) {
   return _then(_CreateTransactionStateError(
+null == failure ? _self.failure : failure // ignore: cast_nullable_to_non_nullable
+as Failure,
+  ));
+}
+
+
+}
+
+/// @nodoc
+mixin _$TransactionExportState {
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionExportState);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'TransactionExportState()';
+}
+
+
+}
+
+/// @nodoc
+class $TransactionExportStateCopyWith<$Res>  {
+$TransactionExportStateCopyWith(TransactionExportState _, $Res Function(TransactionExportState) __);
+}
+
+
+/// Adds pattern-matching-related methods to [TransactionExportState].
+extension TransactionExportStatePatterns on TransactionExportState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _TransactionExportStateInitial value)?  initial,TResult Function( _TransactionExportStateLoading value)?  loading,TResult Function( _TransactionExportStateSuccess value)?  success,TResult Function( _TransactionExportStateError value)?  error,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _TransactionExportStateInitial() when initial != null:
+return initial(_that);case _TransactionExportStateLoading() when loading != null:
+return loading(_that);case _TransactionExportStateSuccess() when success != null:
+return success(_that);case _TransactionExportStateError() when error != null:
+return error(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _TransactionExportStateInitial value)  initial,required TResult Function( _TransactionExportStateLoading value)  loading,required TResult Function( _TransactionExportStateSuccess value)  success,required TResult Function( _TransactionExportStateError value)  error,}){
+final _that = this;
+switch (_that) {
+case _TransactionExportStateInitial():
+return initial(_that);case _TransactionExportStateLoading():
+return loading(_that);case _TransactionExportStateSuccess():
+return success(_that);case _TransactionExportStateError():
+return error(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _TransactionExportStateInitial value)?  initial,TResult? Function( _TransactionExportStateLoading value)?  loading,TResult? Function( _TransactionExportStateSuccess value)?  success,TResult? Function( _TransactionExportStateError value)?  error,}){
+final _that = this;
+switch (_that) {
+case _TransactionExportStateInitial() when initial != null:
+return initial(_that);case _TransactionExportStateLoading() when loading != null:
+return loading(_that);case _TransactionExportStateSuccess() when success != null:
+return success(_that);case _TransactionExportStateError() when error != null:
+return error(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function()?  success,TResult Function( Failure failure)?  error,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _TransactionExportStateInitial() when initial != null:
+return initial();case _TransactionExportStateLoading() when loading != null:
+return loading();case _TransactionExportStateSuccess() when success != null:
+return success();case _TransactionExportStateError() when error != null:
+return error(_that.failure);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function()  success,required TResult Function( Failure failure)  error,}) {final _that = this;
+switch (_that) {
+case _TransactionExportStateInitial():
+return initial();case _TransactionExportStateLoading():
+return loading();case _TransactionExportStateSuccess():
+return success();case _TransactionExportStateError():
+return error(_that.failure);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function()?  success,TResult? Function( Failure failure)?  error,}) {final _that = this;
+switch (_that) {
+case _TransactionExportStateInitial() when initial != null:
+return initial();case _TransactionExportStateLoading() when loading != null:
+return loading();case _TransactionExportStateSuccess() when success != null:
+return success();case _TransactionExportStateError() when error != null:
+return error(_that.failure);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _TransactionExportStateInitial implements TransactionExportState {
+  const _TransactionExportStateInitial();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionExportStateInitial);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'TransactionExportState.initial()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _TransactionExportStateLoading implements TransactionExportState {
+  const _TransactionExportStateLoading();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionExportStateLoading);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'TransactionExportState.loading()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _TransactionExportStateSuccess implements TransactionExportState {
+  const _TransactionExportStateSuccess();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionExportStateSuccess);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'TransactionExportState.success()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _TransactionExportStateError implements TransactionExportState {
+  const _TransactionExportStateError(this.failure);
+  
+
+ final  Failure failure;
+
+/// Create a copy of TransactionExportState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$TransactionExportStateErrorCopyWith<_TransactionExportStateError> get copyWith => __$TransactionExportStateErrorCopyWithImpl<_TransactionExportStateError>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionExportStateError&&(identical(other.failure, failure) || other.failure == failure));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,failure);
+
+@override
+String toString() {
+  return 'TransactionExportState.error(failure: $failure)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$TransactionExportStateErrorCopyWith<$Res> implements $TransactionExportStateCopyWith<$Res> {
+  factory _$TransactionExportStateErrorCopyWith(_TransactionExportStateError value, $Res Function(_TransactionExportStateError) _then) = __$TransactionExportStateErrorCopyWithImpl;
+@useResult
+$Res call({
+ Failure failure
+});
+
+
+
+
+}
+/// @nodoc
+class __$TransactionExportStateErrorCopyWithImpl<$Res>
+    implements _$TransactionExportStateErrorCopyWith<$Res> {
+  __$TransactionExportStateErrorCopyWithImpl(this._self, this._then);
+
+  final _TransactionExportStateError _self;
+  final $Res Function(_TransactionExportStateError) _then;
+
+/// Create a copy of TransactionExportState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? failure = null,}) {
+  return _then(_TransactionExportStateError(
 null == failure ? _self.failure : failure // ignore: cast_nullable_to_non_nullable
 as Failure,
   ));

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:universalexpensetracker/core/services/listeners/app_event_listener.dart';
 import 'package:universalexpensetracker/core/storage/hive_boxes.dart';
 import 'package:universalexpensetracker/core/theme/app_theme.dart';
 import 'package:universalexpensetracker/features/onboarding/di/onboarding_di.dart';
@@ -37,10 +38,12 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        return MaterialApp(
-          theme: AppTheme.lightTheme,
-          debugShowCheckedModeBanner: false,
-          home: SplashScreen(),
+        return AppEventListener(
+          child: MaterialApp(
+            theme: AppTheme.lightTheme,
+            debugShowCheckedModeBanner: false,
+            home: SplashScreen(),
+          ),
         );
       },
     );

@@ -4,9 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:universalexpensetracker/core/extensions/numbers_extension.dart';
 import 'package:universalexpensetracker/core/theme/app_colors.dart';
 import 'package:universalexpensetracker/core/theme/app_text_styles.dart';
+import 'package:universalexpensetracker/core/widgets/custom_icon_button.dart';
 import 'package:universalexpensetracker/core/widgets/states/error_state.dart';
 import 'package:universalexpensetracker/core/widgets/states/loading_state.dart';
+import 'package:universalexpensetracker/features/transactions/di/transactions_di.dart';
+import 'package:universalexpensetracker/features/transactions/presentation/providers/transaction_provider.dart';
 import 'package:universalexpensetracker/features/transactions/presentation/widgets/empty_transaction_widget.dart';
+import 'package:universalexpensetracker/features/transactions/presentation/widgets/transaction_filter_bottom_sheet.dart';
+import 'package:universalexpensetracker/features/transactions/presentation/widgets/transaction_title.dart';
 
 class TransactionListScreen extends ConsumerStatefulWidget {
   const TransactionListScreen({super.key});
@@ -26,26 +31,39 @@ class _TransactionListScreenState extends ConsumerState<TransactionListScreen> {
       children: [
         16.hSizedBox,
         _buildHeader(),
-        16.hSizedBox,
-        _buildFilters(),
-        24.hSizedBox,
-        Expanded(child: EmptyTransactionWidget()),
-        // EmptyTransactionWidget(),
-        // ListView.builder(
-        //   itemBuilder: (context, index) => Container(),
-        //   // TransactionTile(transaction: _recentTransactions[2]
-        //   shrinkWrap: true,
-        //   physics: BouncingScrollPhysics(),
-        //   itemCount: 10,
-        // ),
+        // 16.hSizedBox,
+        // _buildFilters(),
+        14.hSizedBox,
+        Expanded(child: _transactionBuilder()),
       ],
+    );
+  }
+
+  Widget _transactionBuilder() {
+    final transactionAsync = ref.watch(streamProviderOfTransaction);
+    return transactionAsync.when(
+      data: (data) {
+        if (data.isEmpty) return EmptyTransactionWidget();
+        return ListView.builder(
+          itemBuilder: (context, index) => Padding(
+            padding: EdgeInsets.only(top: index == 0 ? 16.h : 0),
+            child: TransactionTile(transaction: data[index]),
+          ),
+          shrinkWrap: true,
+          physics: BouncingScrollPhysics(),
+          itemCount: data.length,
+        );
+      },
+      error: (e, _) =>
+          ErrorState(onRetry: () => ref.refresh(streamProviderOfTransaction)),
+      loading: () => LoadingState(),
     );
   }
 
   // ── Header ──────────────────────────────────────────────────────
   Widget _buildHeader() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
           'Transactions',
@@ -55,43 +73,20 @@ class _TransactionListScreenState extends ConsumerState<TransactionListScreen> {
             letterSpacing: -0.5,
           ),
         ),
-        Container(
-          width: 44.w,
-          height: 44.h,
-          decoration: BoxDecoration(
-            color: AppColors.inputField,
-            shape: BoxShape.circle,
-            border: Border.all(color: AppColors.border),
-          ),
-          child: Icon(
-            Icons.file_download_outlined,
-            color: AppColors.white,
-            size: 20.spMin,
-          ),
+        Spacer(),
+        CustomIconButton(icon: Icons.tune_rounded, onTap: _showFilterOptions),
+        8.wSizedBox,
+        CustomIconButton(
+          icon: Icons.file_download_outlined,
+          onTap: () => ref
+              .read(providerOfTransactionNotifier.notifier)
+              .exportTransaction(),
         ),
       ],
     );
   }
 
-  Widget _buildFilters() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        _filterTile(title: "All"),
-        _filterTile(title: "Income"),
-        _filterTile(title: "Expenses"),
-      ],
-    );
-  }
-
-  Widget _filterTile({required String title}) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 22.spMin, vertical: 5.spMin),
-      decoration: BoxDecoration(
-        color: AppColors.income,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(title, style: AppTextStyles.bodyBold),
-    );
+  void _showFilterOptions() {
+    FilterBottomSheet.show(context);
   }
 }

@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:universalexpensetracker/core/error/exceptions.dart';
 import 'package:universalexpensetracker/core/error/failures.dart';
+import 'package:universalexpensetracker/core/helpers/app_logger.dart';
 import 'package:universalexpensetracker/core/helpers/uuid_generator.dart';
+import 'package:universalexpensetracker/core/services/export/data_exporter.dart';
 import 'package:universalexpensetracker/features/dashboard/domain/usecase/get_dashboard_usecase.dart';
 import 'package:universalexpensetracker/features/transactions/data/model/transaction_model.dart';
 import 'package:universalexpensetracker/features/transactions/data/source/local/transaction_local_data_source.dart';
@@ -11,8 +13,9 @@ import 'package:universalexpensetracker/features/transactions/domain/usecase/add
 
 class TransactionRepositoryImpl implements TransactionRepository {
   final TransactionLocalDataSource localDataSource;
+  final DataExporter exporter;
 
-  TransactionRepositoryImpl(this.localDataSource);
+  TransactionRepositoryImpl(this.localDataSource, this.exporter);
 
   @override
   Future<Either<Failure, void>> addTransaction(TransactionParams params) async {
@@ -27,7 +30,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
       );
 
       await localDataSource.addTransaction(model);
-      return Right(null);
+      return const Right(null);
     } on CacheException {
       return Left(CacheFailure());
     }
@@ -64,6 +67,8 @@ class TransactionRepositoryImpl implements TransactionRepository {
   ) {
     var result = models;
 
+    result = result.reversed.toList();
+
     if (params.type != null) {
       result = result.where((m) => m.type == params.type!.name).toList();
     }
@@ -77,7 +82,31 @@ class TransactionRepositoryImpl implements TransactionRepository {
             m.date.year == params.dateFilter!.year;
       }).toList();
     }
+    if (params.limit != 0) {
+      result = result.take(params.limit).toList();
+    }
 
     return result;
+  }
+
+  @override
+  Future<Either<Failure, void>> exportTransactions() async {
+    try {
+      final transactions = await localDataSource.getTransactionList();
+      await exporter.export(
+        fileName: "transactions",
+        headers: ["ID", "Date", "Title", "Amount", "Type", "Category"],
+        rows: transactions.map((t) {
+          return [t.id, t.date, t.title, t.amount, t.type, t.categoryId];
+        }).toList(),
+      );
+      return const Right(null);
+    } on ExportException catch (e, st) {
+      AppLogger.error("Export Error", e, st);
+      return Left(ExportFailure(e.message));
+    } catch (e, st) {
+      AppLogger.error("Export Error", e, st);
+      return Left(ExportFailure("Unexpected export error"));
+    }
   }
 }

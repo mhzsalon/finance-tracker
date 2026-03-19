@@ -26,56 +26,52 @@ class EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 64.h),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 60.w,
-              height: 60.h,
-              decoration: BoxDecoration(
-                color: AppColors.inputField,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Icon(icon, size: 30.spMin, color: const Color(0xFF6B7280)),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 64.h),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 60.w,
+            height: 60.h,
+            decoration: BoxDecoration(
+              color: AppColors.inputField,
+              borderRadius: BorderRadius.circular(16),
             ),
-            16.hSizedBox,
-            Text(title, style: AppTextStyles.sectionTitle),
-            if (description != null) ...[
-              6.hSizedBox,
-              Text(
-                description!,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  color: Color(0xFF6B7280),
-                  height: 1.4,
-                ),
+            child: Icon(icon, size: 30.spMin, color: const Color(0xFF6B7280)),
+          ),
+          16.hSizedBox,
+          Text(title, style: AppTextStyles.sectionTitle),
+          if (description != null) ...[
+            6.hSizedBox,
+            Text(
+              description!,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 12.sp,
+                color: Color(0xFF6B7280),
+                height: 1.4,
               ),
-            ],
-            if (actionLabel != null && onAction != null) ...[
-              20.hSizedBox,
-              ElevatedButton.icon(
-                onPressed: onAction,
-                icon: Icon(Icons.add, size: 18.spMin),
-                label: Text(actionLabel!),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF00C9A7),
-                  foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20.w,
-                    vertical: 12.h,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ],
-        ),
+          if (actionLabel != null && onAction != null) ...[
+            20.hSizedBox,
+            ElevatedButton.icon(
+              onPressed: onAction,
+              icon: Icon(Icons.add, size: 18.spMin),
+              label: Text(actionLabel!),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF00C9A7),
+                foregroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }

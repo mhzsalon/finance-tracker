@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:universalexpensetracker/core/constants/asset_paths.dart';
 import 'package:universalexpensetracker/core/theme/app_colors.dart';
 import 'package:universalexpensetracker/core/utils/navigation.dart';
-import 'package:universalexpensetracker/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:universalexpensetracker/features/onboarding/di/onboarding_di.dart';
 import 'package:universalexpensetracker/features/onboarding/presentation/provider/state/onboarding_state.dart';
 import 'package:universalexpensetracker/features/onboarding/presentation/screen/onboarding_screen.dart';
@@ -32,13 +31,15 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   Widget build(BuildContext context) {
     _listenToStateChange();
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      // backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.onboardingBg,
+
       body: Center(
         child: Container(
           height: 120.h,
           width: 120.w,
           decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(AssetPaths.appIcon)),
+            image: DecorationImage(image: AssetImage(AssetPaths.wallet)),
             boxShadow: [
               BoxShadow(
                 color: AppColors.textPrimary.withOpacity(0.2),
