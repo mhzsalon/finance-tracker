@@ -1,4 +1,4 @@
-# Universal Expense Tracker
+# Finance Tracker
 
 A Flutter app to track income and expenses with a clean dashboard, categories, and local storage.
 
@@ -10,6 +10,9 @@ A Flutter app to track income and expenses with a clean dashboard, categories, a
 - **Categories** — Category support for organizing expenses
 - **Local storage** — Data persisted locally with [Hive](https://docs.hivedb.dev/) (no account required)
 
+## Demo
+
+[![Watch the demo](https://img.youtube.com/vi/yUfO51mZh_8/0.jpg)](https://youtube.com/shorts/yUfO51mZh_8)
 
 ## Tech stack
 
